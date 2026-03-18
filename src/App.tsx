@@ -1,12 +1,21 @@
 import { useState } from "react"
 import { AlertCard } from "@/components/AlertCard"
 import { alerts } from "@/data/alerts"
+import { feedback } from "@/data/feedback"
+import { scoreRelevance } from "@/lib/scoreRelevance"
 
 function App() {
   const [relevanceFilter, setRelevanceFilter] = useState<"All" | "High" | "Medium" | "Low">("All")
 
+  const scoredAlerts = alerts.map((alert) => ({
+    ...alert,
+    relevanceLabel: scoreRelevance(alert.field, feedback),
+  }))
+
   const visibleAlerts =
-    relevanceFilter === "All" ? alerts : alerts.filter((alert) => alert.relevanceLabel === relevanceFilter)
+    relevanceFilter === "All"
+      ? scoredAlerts
+      : scoredAlerts.filter((alert) => alert.relevanceLabel === relevanceFilter)
 
   return (
     <main className="min-h-screen bg-white px-6 py-10">
