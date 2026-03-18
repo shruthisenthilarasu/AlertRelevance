@@ -1,4 +1,3 @@
-import { useState } from "react"
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 
@@ -19,21 +18,15 @@ const relevanceColors = {
   Low: "bg-gray-100 text-gray-600",
 }
 
-export function AlertCard({ alert }: { alert: Alert }) {
-  const [relevanceLabel, setRelevanceLabel] = useState<Alert["relevanceLabel"]>(alert.relevanceLabel)
-
-  const nextRelevance: Record<Alert["relevanceLabel"], Alert["relevanceLabel"]> = {
-    Low: "Medium",
-    Medium: "High",
-    High: "High",
-  }
-
-  const prevRelevance: Record<Alert["relevanceLabel"], Alert["relevanceLabel"]> = {
-    Low: "Low",
-    Medium: "Low",
-    High: "Medium",
-  }
-
+export function AlertCard({
+  alert,
+  onThumbUp,
+  onThumbDown,
+}: {
+  alert: Alert
+  onThumbUp?: (category: string) => void
+  onThumbDown?: (category: string) => void
+}) {
   return (
     <Card className="w-full max-w-md">
       <CardHeader>
@@ -54,14 +47,14 @@ export function AlertCard({ alert }: { alert: Alert }) {
         </div>
         <div className="flex items-center gap-2">
           <span className="text-xs text-gray-400">Relevance</span>
-          <span className={"text-xs px-2 py-0.5 rounded-full font-medium " + relevanceColors[relevanceLabel]}>
-            {relevanceLabel}
+          <span className={"text-xs px-2 py-0.5 rounded-full font-medium " + relevanceColors[alert.relevanceLabel]}>
+            {alert.relevanceLabel}
           </span>
           <button
             type="button"
             aria-label="Increase relevance"
             className="text-xs text-gray-400 hover:text-gray-900"
-            onClick={() => setRelevanceLabel((r) => nextRelevance[r])}
+            onClick={() => onThumbUp?.(alert.field)}
           >
             👍
           </button>
@@ -69,15 +62,15 @@ export function AlertCard({ alert }: { alert: Alert }) {
             type="button"
             aria-label="Decrease relevance"
             className="text-xs text-gray-400 hover:text-gray-900"
-            onClick={() => setRelevanceLabel((r) => prevRelevance[r])}
+            onClick={() => onThumbDown?.(alert.field)}
           >
             👎
           </button>
         </div>
         <div className="text-xs text-gray-400">
-          {relevanceLabel === "High"
+          {alert.relevanceLabel === "High"
             ? `Frequently engaged with ${alert.field} alerts`
-            : relevanceLabel === "Medium"
+            : alert.relevanceLabel === "Medium"
               ? `Occasionally engaged with ${alert.field} alerts`
               : `Rarely engaged with ${alert.field} alerts`}
         </div>
