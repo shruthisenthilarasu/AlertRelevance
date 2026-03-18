@@ -74,6 +74,13 @@ export function AlertCard({ alert }: { alert: Alert }) {
             👎
           </button>
         </div>
+        <div className="text-xs text-gray-400">
+          {relevanceLabel === "High"
+            ? `Frequently engaged with ${alert.field} alerts`
+            : relevanceLabel === "Medium"
+              ? `Occasionally engaged with ${alert.field} alerts`
+              : `Rarely engaged with ${alert.field} alerts`}
+        </div>
         <div className="border-t pt-2 text-xs">
           <div className="mb-1 font-medium text-gray-400">History</div>
           <ul className="space-y-1">
