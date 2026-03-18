@@ -1,7 +1,13 @@
+import { useState } from "react"
 import { AlertCard } from "@/components/AlertCard"
 import { alerts } from "@/data/alerts"
 
 function App() {
+  const [relevanceFilter, setRelevanceFilter] = useState<"All" | "High" | "Medium" | "Low">("All")
+
+  const visibleAlerts =
+    relevanceFilter === "All" ? alerts : alerts.filter((alert) => alert.relevanceLabel === relevanceFilter)
+
   return (
     <main className="min-h-screen bg-white px-6 py-10">
       <div className="mx-auto max-w-3xl space-y-6">
@@ -16,8 +22,27 @@ function App() {
           30 days ago you prioritized: Pricing alerts<br />
           This week you're engaging with: News alerts
         </div>
+        <div className="flex flex-wrap gap-2">
+          {(["All", "High", "Medium", "Low"] as const).map((label) => {
+            const selected = relevanceFilter === label
+            return (
+              <button
+                key={label}
+                type="button"
+                aria-pressed={selected}
+                onClick={() => setRelevanceFilter(label)}
+                className={
+                  "rounded-md px-2 py-1 text-xs transition-colors " +
+                  (selected ? "bg-gray-200 text-gray-800" : "bg-transparent text-gray-500 hover:text-gray-700")
+                }
+              >
+                {label}
+              </button>
+            )
+          })}
+        </div>
         <div className="space-y-4">
-          {alerts.map((alert, i) => (
+          {visibleAlerts.map((alert, i) => (
             <AlertCard key={i} alert={alert} />
           ))}
         </div>
