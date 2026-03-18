@@ -1,13 +1,18 @@
-export type FeedbackEvent = {
-  category: "pricing" | "features" | "messaging"
-  action: "clicked" | "ignored"
-  timestamp: string
-}
+import type { FeedbackEvent } from "@/lib/scoreRelevance"
 
 export const feedback: FeedbackEvent[] = [
-  { category: "pricing", action: "clicked", timestamp: "2025-03-01" },
-  { category: "pricing", action: "clicked", timestamp: "2025-03-05" },
-  { category: "features", action: "ignored", timestamp: "2025-03-03" },
-  { category: "messaging", action: "ignored", timestamp: "2025-03-07" },
+  // High (>= 3 clicked)
+  { category: "pricing", action: "clicked" },
+  { category: "pricing", action: "clicked" },
+  { category: "pricing", action: "clicked" },
+
+  // Medium (1-2 clicked)
+  { category: "features", action: "clicked" },
+  { category: "features", action: "clicked" },
+  { category: "features", action: "ignored" },
+
+  // Low (0 clicked)
+  { category: "messaging", action: "ignored" },
+  { category: "messaging", action: "ignored" },
 ]
 
