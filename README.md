@@ -41,3 +41,5 @@ It does not include:
 ## Next step in a real system
 
 In a production version, snapshots would be collected on a schedule, stored in a database, compared against prior values, and then enriched with relevance scoring before being surfaced to the user.
+A short video demo
+[gorec-2026-03-18-23-54-53.webm](https://github.com/user-attachments/assets/3916d9a8-73e3-4a5f-ae8b-cacb9c210f7f)
