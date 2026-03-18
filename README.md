@@ -1,73 +1,43 @@
-# React + TypeScript + Vite
+# AlertRelevance
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A small prototype exploring how competitor alerts become more useful when they include historical context and adapt to what a user actually cares about.
 
-Currently, two official plugins are available:
+Most alerts tell you what changed. This prototype explores making them tell you why it matters.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## What it shows
 
-## React Compiler
+- an alert with the old value and new value
+- how long the previous value stayed stable
+- a simple history timeline for that field
+- a relevance label based on user interest
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Core idea
 
-## Expanding the ESLint configuration
+Alerts lose value in two ways:
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+1. they lack context over time  
+2. they stop matching what the user actually cares about
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+This prototype explores both by combining:
+- a timeline of field changes
+- lightweight relevance scoring from user engagement
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+## Current scope
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+This is intentionally small and mocked.
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+It does not include:
+- live crawling
+- backend storage
+- Slack delivery
+- production scoring logic
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## Tech stack
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+- React
+- TypeScript
+- Vite
+
+## Next step in a real system
+
+In a production version, snapshots would be collected on a schedule, stored in a database, compared against prior values, and then enriched with relevance scoring before being surfaced to the user.
