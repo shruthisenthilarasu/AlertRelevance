@@ -28,5 +28,19 @@ export const alerts: Alert[] = [
       { date: "Mar 2025", value: "AI-powered analytics for growing teams" },
     ],
   },
+  {
+    competitor: "TechCrunch",
+    field: "News",
+    oldValue: "Series A - $12M raised",
+    newValue: "Series B - $40M raised",
+    stableSince: "January 2025",
+    daysStable: 74,
+    relevanceLabel: "Low" as const,
+    timeline: [
+      { date: "Oct 2023", value: "Seed - $2M" },
+      { date: "Jan 2025", value: "Series A - $12M" },
+      { date: "Mar 2025", value: "Series B - $40M" },
+    ],
+  },
 ]
 
