@@ -1,4 +1,4 @@
-import * as React from "react"
+import { useState } from "react"
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 
@@ -20,6 +20,20 @@ const relevanceColors = {
 }
 
 export function AlertCard({ alert }: { alert: Alert }) {
+  const [relevanceLabel, setRelevanceLabel] = useState<Alert["relevanceLabel"]>(alert.relevanceLabel)
+
+  const nextRelevance: Record<Alert["relevanceLabel"], Alert["relevanceLabel"]> = {
+    Low: "Medium",
+    Medium: "High",
+    High: "High",
+  }
+
+  const prevRelevance: Record<Alert["relevanceLabel"], Alert["relevanceLabel"]> = {
+    Low: "Low",
+    Medium: "Low",
+    High: "Medium",
+  }
+
   return (
     <Card className="w-full max-w-md">
       <CardHeader>
@@ -40,9 +54,25 @@ export function AlertCard({ alert }: { alert: Alert }) {
         </div>
         <div className="flex items-center gap-2">
           <span className="text-xs text-gray-400">Relevance</span>
-          <span className={"text-xs px-2 py-0.5 rounded-full font-medium " + relevanceColors[alert.relevanceLabel]}>
-            {alert.relevanceLabel}
+          <span className={"text-xs px-2 py-0.5 rounded-full font-medium " + relevanceColors[relevanceLabel]}>
+            {relevanceLabel}
           </span>
+          <button
+            type="button"
+            aria-label="Increase relevance"
+            className="text-xs text-gray-400 hover:text-gray-900"
+            onClick={() => setRelevanceLabel((r) => nextRelevance[r])}
+          >
+            👍
+          </button>
+          <button
+            type="button"
+            aria-label="Decrease relevance"
+            className="text-xs text-gray-400 hover:text-gray-900"
+            onClick={() => setRelevanceLabel((r) => prevRelevance[r])}
+          >
+            👎
+          </button>
         </div>
         <div className="border-t pt-2 text-xs">
           <div className="mb-1 font-medium text-gray-400">History</div>
