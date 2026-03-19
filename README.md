@@ -42,6 +42,6 @@ It does not include:
 
 In a production version, snapshots would be collected on a schedule, stored in a database, compared against prior values, and then enriched with relevance scoring before being surfaced to the user.
 
-## Demo (45s)
+## Demo 
 [gorec-2026-03-18-23-54-53.webm](https://github.com/user-attachments/assets/0b5fe131-5650-4b84-8d46-c706b4cfeb30)
 
